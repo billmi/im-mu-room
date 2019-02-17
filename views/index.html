@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>im room</title>
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+    <div id="list">
+
+    </div>
+<script>
+    var roomid = (function () {
+        return prompt('请输入房间号','')
+    })();
+
+    var userInfo = {
+        username: (function () {
+            return prompt('请输入rtx昵称', '');
+        })()
+    };
+
+    if(roomid != null && roomid != "") {
+        var socket = io.connect('http://127.0.0.1:3000?roomid='+ roomid);
+
+        socket.emit('join', {
+            username: userInfo.username
+        });
+
+        socket.on('message', function(msg){
+            switch (msg.event) {
+                case 'join':
+                    if (msg.data.username) {
+                        console.log(msg.data.username + '加入了聊天室');
+                        var data = {
+                            text: msg.data.username + '加入了聊天室'
+                        };
+                        showNotice(data);
+                    }
+                    break;
+                /*收到消息广播后，显示消息*/
+                case 'broadcast_say':
+                    if(msg.data.username!==userInfo.username) {
+                        console.log(msg.data.username + '说: ' + msg.data.text);
+                        showMessage(msg.data);
+                    }
+                    break;
+                /*离开聊天室广播后，显示消息*/
+                case 'broadcast_quit':
+                    if (msg.data.username) {
+                        console.log(msg.data.username + '离开了聊天室');
+                        var data = {
+                            text: msg.data.username + '离开了聊天室'
+                        };
+                        showNotice(data);
+                    }
+                    break;
+            }
+        })
+
+    }
+
+
+
+    /*点击发送按钮*/
+    document.getElementById('send').onclick = function () {
+        var keywords = document.getElementById('keywords');
+        if (keywords.value === '') {
+            keywords.focus();
+            return false;
+        }
+        var data = {
+            text: keywords.value,
+            type: 0,
+            username: userInfo.username
+        };
+        /*向服务器提交一个say事件，发送消息*/
+        socket.emit('say', data);
+
+        showMessage(data);
+        keywords.value = "";
+        keywords.focus();
+    };
+    /*展示消息*/
+    function showMessage(data) {
+        var itemArr = [];
+        itemArr.push('<dd class="'+(data.type === 0 ? "me" : "other")+'">');
+        itemArr.push('<ul>');
+        itemArr.push('<li class="nick-name">' + data.username + '</li>');
+        itemArr.push('<li class="detail">');
+        itemArr.push('<div class="head-icon"></div>');
+        itemArr.push('<div class="text">' + data.text + '</div>');
+        itemArr.push('</li>');
+        itemArr.push('</ul>');
+        itemArr.push('</dd>');
+
+        document.getElementById('list').innerHTML += itemArr.join('');
+    }
+    /*展示通知*/
+    function showNotice(data) {
+        var item = '<dd class="tc"><span>' + data.text + '</span><dd>';
+        document.getElementById('list').innerHTML += item;
+    }
+
+    /*回车事件*/
+    document.onkeyup = function (e) {
+        if (!e) e = window.event;
+        if ((e.keyCode || e.which) == 13) {
+            document.getElementById('send').click();
+        }
+    }
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,42 @@
+Arguments: 
+  C:\nodejs\node.exe C:\Yarn\bin\yarn.js add redis
+
+PATH: 
+  E:\WebSite\my\socketio_my\node_modules\.bin;C:\ProgramData\DockerDesktop\version-bin;C:\Program Files\Docker\Docker\Resources\bin;C:\ProgramData\Oracle\Java\javapath;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;E:\Git\cmd;E:\tGit\bin;"%JAVA_HOME%\bin;";"%JAVA_HOME%\jre\bin;";C:\nodejs\;C:\Yarn\bin\;E:\phpStudy\PHPTutorial\php\php-5.6.27-nts;;C:\TDM-GCC-64\bin;C:\Go\bin;C:\Users\Administrator\AppData\Local\Microsoft\WindowsApps;C:\Users\Administrator\AppData\Roaming\npm;C:\Users\Administrator\AppData\Local\Yarn\bin;E:/WebSite/GoWork/upfile\bin
+
+Yarn version: 
+  1.9.4
+
+Node version: 
+  10.15.0
+
+Platform: 
+  win32 x64
+
+Trace: 
+  Error: ENOENT: no such file or directory, copyfile 'C:\Users\Administrator\AppData\Local\Yarn\Cache\v2\npm-ms-2.1.1-30a5864eb3ebb0a66f2ebe6d727af06a09d86e0a\license.md' -> 'E:\WebSite\my\socketio_my\node_modules\socket.io\node_modules\ms\license.md'
+
+npm manifest: 
+  {
+    "name": "chart",
+    "version": "1.0.1",
+    "description": "websockets服务",
+    "main": "app.js",
+    "author": "Bill",
+    "license": "MIT",
+    "dependencies": {
+      "ejs": "^2.6.1",
+      "express": "^4.16.4",
+      "http": "^0.0.0",
+      "ioredis": "^3.2.2",
+      "mysql": "^2.16.0",
+      "socket.io": "^2.1.1",
+      "socket.io-client": "^2.1.1"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
